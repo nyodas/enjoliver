@@ -117,11 +117,11 @@ dev_setup:
 	test $(MY_USER)
 	test $(shell id -u -r) -eq 0
 	su - $(MY_USER) -c "make -C $(CWD) submodules"
-	su - $(MY_USER) -c "make -C $(CWD) dev_setup_runtime"
+	sudo -E -u $(MY_USER) make -C $(CWD) dev_setup_runtime
 	su - $(MY_USER) -c "make -C $(CWD)/app/tests testing.id_rsa"
 	su - $(MY_USER) -c "make -C $(CWD) front"
 	su - $(MY_USER) -c "make -C $(CWD) pip"
-	su - $(MY_USER) -c "make -C $(CWD) assets"
+	sudo -E -u $(MY_USER) make -C $(CWD) assets
 	make -C $(CWD) aci
 	make -C $(CWD)/matchbox/assets/coreos
 	su - $(MY_USER) -c "make -C $(CWD)/matchbox/assets/coreos serve"
